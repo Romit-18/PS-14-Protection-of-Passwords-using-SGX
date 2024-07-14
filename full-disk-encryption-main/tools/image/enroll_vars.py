@@ -8,7 +8,7 @@ import argparse
 import logging
 from ovmfkeyenroll.var_enroll import var_enroll, VarEnrollOps
 
-# pylint: disable=redefined-builtin
+
 
 LOG = logging.getLogger(__name__)
 
