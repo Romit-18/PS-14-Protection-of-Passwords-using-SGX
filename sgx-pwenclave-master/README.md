@@ -1,54 +1,41 @@
-Using SGX to harden password hashing
-====================================
+# Using SGX to Harden Password Hashing
 
-SGX is a way of running security-sensitive user-mode code in an 'enclave'.
-Code running in an enclave has its memory encrypted and authenticated, and cannot be
-observed by code running anywhere else.  It's able to use device-specific
-keys to encrypt ('seal') data to future executions of itself or enclaves signed by the
-same key.
+Intel Software Guard Extensions (SGX) allows running security-sensitive user-mode code in an 'enclave'. Enclave memory is encrypted and authenticated, making it inaccessible to code running elsewhere. Enclaves can use device-specific keys to encrypt ('seal') data for future executions of themselves or other enclaves signed with the same key.
 
-This project does PBKDF2 password hashing inside an SGX enclave.
-Password hashes are only available to enclaves which have been enrolled in a 'region',
-and therefore no amount of database leakage will jeopardise user passwords.  Your
-stack of GPUs are useless here.
+This project implements PBKDF2 password hashing within an SGX enclave. Password hashes are accessible only to enclaves enrolled in a 'region', ensuring user passwords remain secure even if the database is compromised. GPUs are ineffective against this security measure.
 
-A region is represented with a AES key, and enclaves in a region have a copy of it
-sealed to them.  The key itself can be kept offline and only used when enrolling
-new enclaves or doing disaster recovery.
+A region is represented by an AES key, sealed to the enclaves in the region. The key can be kept offline and used only for enrolling new enclaves or disaster recovery.
 
-See my corresponding blog post [here](https://jbp.io/2016/01/17/using-sgx-to-hash-passwords/).
+For more information, see my [blog post](https://jbp.io/2016/01/17/using-sgx-to-hash-passwords/).
 
-Warning
--------
+## Warning
 
-This is extremely experimental.  Use at your own risk. There is no warranty.
+This project is highly experimental and provided without any warranty. Use at your own risk.
 
-This repo includes a trivial region key, the enclave signing private key and the enclave
-runs in debug mode, so this in fact provides no meaningful security.
+The repository includes a trivial region key, the enclave signing private key, and the enclave runs in debug mode, so it offers no real security.
 
-Tour
-----
+## Project Tour
 
-Interesting files:
+### Interesting Files:
 
-* **[pwenclave/pwenclave.edl](pwenclave/pwenclave.edl)**: defines the interface surface between user-mode code and the enclave.
-  An Intel-provided tool takes this definition and generates stubs for calling these functions in user-mode and converting
-  arguments in the enclave (these are [pwenclave/pwenclave_t.c](pwenclave/pwenclave_t.c)
-  and [smoketest/pwenclave_u.c](smoketest/pwenclave_u.c)).
-* **[pwenclave/pwenclave.c](pwenclave/pwenclave.c)**: implements this interface.  There are bunch of other files alongside providing PBKDF2 etc.
-* **[smoketest/smoketest.c](smoketest/smoketest.c)**: starts the enclave and exercises the functions.
+- **[pwenclave/pwenclave.edl](pwenclave/pwenclave.edl)**: Defines the interface between user-mode code and the enclave. An Intel-provided tool uses this definition to generate stubs for calling these functions in user-mode and converting arguments in the enclave. These stubs are found in [pwenclave/pwenclave_t.c](pwenclave/pwenclave_t.c) and [smoketest/pwenclave_u.c](smoketest/pwenclave_u.c).
+- **[pwenclave/pwenclave.c](pwenclave/pwenclave.c)**: Implements the interface. Other files alongside provide PBKDF2 and additional functionality.
+- **[smoketest/smoketest.c](smoketest/smoketest.c)**: Starts the enclave and tests the functions.
 
-Building
---------
+## Building
 
-You will need:
+### Requirements:
 
 - The [Intel SGX SDK](https://software.intel.com/en-us/sgx-sdk).
-- Visual Studio 2012 (a prerequisite of the SGX SDK).
-- The Intel SGX Platform Software (comes with SDK) along with SGX-supporting hardware (a Skylake CPU and working BIOS).  The SDK supports a simulator; I haven't tried that.
+- Visual Studio 2012 (required by the SGX SDK).
+- Intel SGX Platform Software (included with the SDK) and SGX-compatible hardware (e.g., a Skylake CPU and compatible BIOS). The SDK supports a simulator, though it has not been tested in this project.
 
-As a fairly obvious result of all this, this is Windows only for the moment.
+This setup is Windows-only.
 
-Once you've got all that sorted, you should merely be able to load the solution and hit run.
+### Instructions:
 
-I've tested this on a Dell Inspiron 5559 laptop.
+1. Install the Intel SGX SDK and required software.
+2. Load the solution in Visual Studio.
+3. Hit run.
+
+This setup was tested on a Dell Inspiron 5559 laptop.
