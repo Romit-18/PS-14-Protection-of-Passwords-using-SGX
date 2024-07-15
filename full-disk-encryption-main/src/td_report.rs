@@ -17,7 +17,6 @@ impl TDReport {
 }
 
 pub struct TDInfo {
-    //member
     pub attributes: Vec<u8>,    //  0x08
     pub xfam: Vec<u8>,          //  0x08
     pub mrtd: Vec<u8>,          //  0x30

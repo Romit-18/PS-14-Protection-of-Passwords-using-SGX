@@ -10,9 +10,6 @@ static uint8_t region_key_plain[PWENCLAVE_REGIONKEY_LEN] = { 0x0, 0x1, 0x2, 0x3,
 static uint8_t sealed_region_key[PWENCLAVE_MAX_BLOB_SIZE];
 static uint32_t sealed_region_key_len;
 
-/* --- ocalls --- */
-
-/* This is a debugging ocall */
 void emit_debug(const char *buf)
 {
   printf("DEBUG: %s\n", buf);

@@ -9,11 +9,6 @@
 # define inline __inline
 #endif
 
-/*
- * Handy CPP defines and C inline functions.
- */
-
-/* Evaluates to the number of items in array-type variable arr. */
 #define ARRAYCOUNT(arr) (sizeof arr / sizeof arr[0])
 
 #ifdef _MSC_VER

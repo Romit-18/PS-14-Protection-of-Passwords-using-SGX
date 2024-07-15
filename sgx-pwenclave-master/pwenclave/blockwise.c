@@ -1,16 +1,3 @@
-/*
- * cifra - embedded cryptography library
- * Written in 2014 by Joseph Birr-Pixton <jpixton@gmail.com>
- *
- * To the extent possible under law, the author(s) have dedicated all
- * copyright and related and neighboring rights to this software to the
- * public domain worldwide. This software is distributed without any
- * warranty.
- *
- * You should have received a copy of the CC0 Public Domain Dedication
- * along with this software. If not, see
- * <http://creativecommons.org/publicdomain/zero/1.0/>.
- */
 
 #include "blockwise.h"
 #include "bitops.h"
@@ -40,7 +27,6 @@ void cf_blockwise_accumulate_final(uint8_t *partial, size_t *npartial, size_t nb
   assert(inp || !nbytes);
   assert(process && ctx);
 
-  /* If we have partial data, copy in to buffer. */
   if (*npartial && nbytes)
   {
     size_t space = nblock - *npartial;
@@ -52,7 +38,7 @@ void cf_blockwise_accumulate_final(uint8_t *partial, size_t *npartial, size_t nb
     nbytes -= taken;
     *npartial += taken;
 
-    /* If that gives us a full block, process it. */
+
     if (*npartial == nblock)
     {
       if (nbytes == 0)
@@ -63,12 +49,9 @@ void cf_blockwise_accumulate_final(uint8_t *partial, size_t *npartial, size_t nb
     }
   }
 
-  /* now nbytes < nblock or *npartial == 0. */
-
-  /* If we have a full block of data, process it directly. */
   while (nbytes >= nblock)
   {
-    /* Partial buffer must be empty, or we're ignoring extant data */
+    
     assert(*npartial == 0);
 
     if (nbytes == nblock)

@@ -4,8 +4,6 @@ Full disk encryption (FDE) is a security method for protecting sensitive data by
 
 ## Architecture
 
-### Preparation
-
 We build the Ubuntu 22.04 guest image on an Ubuntu 22.04 host and validate it. If you work in another environment, please adapt the scripts in the sections below carefully (not recommended).
 
 **Note: The default FDE solution is just a reference implementation. Both `fde-agent` and `fde-image.sh` depend on an available Key Broker Service (KBS). Otherwise, they cannot work. Please modify the `fde-agent` code to add KBS information before running the solution. Details can be found in [retrieve_key_from_kbs](https://github.com/cc-api/full-disk-encryption/blob/3c4325c7a6b4d2fe76aa0b873920bf981c46db41/src/key_broker.rs#L20).**
