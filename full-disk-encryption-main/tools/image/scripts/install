@@ -1,5 +1,3 @@
-#!/bin/bash
-
 TDX_REPO_URL=$1
 ROOT=$2
 ROOT_PASS=$3

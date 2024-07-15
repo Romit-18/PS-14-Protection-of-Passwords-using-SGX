@@ -7,7 +7,6 @@
 
 static uint8_t region_key_plain[PWENCLAVE_REGIONKEY_LEN] = { 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 0xb, 0xc, 0xd, 0xe, 0xf };
 
-/* This data should go in a file.  It is a CPU-specific encryption of the region key. */
 static uint8_t sealed_region_key[PWENCLAVE_MAX_BLOB_SIZE];
 static uint32_t sealed_region_key_len;
 

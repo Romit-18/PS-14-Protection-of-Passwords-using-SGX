@@ -1,13 +1,10 @@
-#!/bin/bash
 
-# This script includes partition operation functions like creating partitions
-# creating LUKS2 partitions format partitions and extract rootfs
 
 create_partitions() {
     local BOOT_SIZE=$1
     local OUTPUT_IMAGE=$2
 
-    # Create partition layout
+    
     sgdisk --clear \
         --new 14::+1M --typecode=14:ef02 --change-name=14:'bios' \
         --new 15::+100M --typecode=15:ef00 --change-name=15:'uefi' \
@@ -26,7 +23,6 @@ create_partitions() {
 create_luks_partition() {
     local KEY=$1
 
-    # Setup root partition to LUKS with cipher aes-gcm-random 256 bit
     echo $KEY |
     cryptsetup -v -q luksFormat --encrypt --type luks2 \
     --cipher aes-gcm-random --integrity aead --key-size 256 $ROOT
@@ -43,9 +39,9 @@ format_partitions() {
     local BOOT=$2
     local ROOT_ENC=$3
 
-    # Create filesystems for EFI and boot partition
+    
     mkfs.fat -F32 $EFI
-    # Relabel because fat format clear ext label
+ 
     fatlabel $EFI uefi
     mkfs.ext4 -F -L "boot" $BOOT
     mkfs.ext4 -F $ROOT_ENC

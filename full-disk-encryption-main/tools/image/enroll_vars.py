@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 
 '''
 Enrolling keys and variables into OVMF

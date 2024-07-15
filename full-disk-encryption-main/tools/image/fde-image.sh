@@ -1,12 +1,4 @@
-#!/bin/bash
 
-# Full Disk Encryption (FDE) image creation includes the following steps:
-# - (Optional) Generate key and register key to KBS
-# - (Optional) Enroll KBS information and key ID to OVMF variables
-# - Create an image with EFI/Boot partitions
-# - Create LUKS encrypted rootfs partition and extract ubuntu cloud image rootfs
-# - Install TDX-related packages and setup environments
-# - Clean up mount points and deactivate the LUKS partition
 
 set -e
 
